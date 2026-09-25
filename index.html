@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Burguer Byte — Entrar</title>
+  <meta name="description" content="Escolha como entrar na Burguer Byte: comprar na loja ou acessar o painel do administrador.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+<div class="entry">
+
+  <!-- ===== Lado da marca ===== -->
+  <section class="hero" aria-label="Burguer Byte">
+    <div class="hero__brand">
+      <span class="hero__logo" aria-hidden="true"></span>
+      <span>BURGUER_BYTE</span>
+    </div>
+
+    <div class="hero__title">
+      <p class="hero__word">BURGUER</p>
+      <p class="hero__word hero__word--pink">BYTE</p>
+      <p class="hero__tag">Sabor retrô em cada bit</p>
+    </div>
+
+    <div class="scene" aria-hidden="true">
+      <span class="neon">EAT</span>
+      <div class="scene__art" id="heroArt"></div>
+    </div>
+  </section>
+
+  <!-- ===== Lado do acesso ===== -->
+  <main class="access">
+    <div class="access__box">
+      <h1 class="access__title">Como você quer entrar?</h1>
+
+      <div class="roles" role="tablist" aria-label="Tipo de acesso">
+        <button class="role" type="button" role="tab" id="tab-cliente" data-perfil="cliente"
+                aria-selected="true" aria-controls="painel-cliente">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <span class="role__title">Quero comprar</span>
+          <span class="role__text">Fazer meu pedido no totem da loja</span>
+        </button>
+
+        <button class="role" type="button" role="tab" id="tab-admin" data-perfil="admin"
+                aria-selected="false" aria-controls="painel-admin" tabindex="-1">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v5.5c0 4.6-3.2 8-8 9.5-4.8-1.5-8-4.9-8-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg>
+          <span class="role__title">Sou administrador</span>
+          <span class="role__text">Fechamento do dia e relatórios</span>
+        </button>
+      </div>
+
+      <!-- Cliente -->
+      <section class="pane" id="painel-cliente" role="tabpanel" aria-labelledby="tab-cliente">
+        <form class="form" id="formCliente" novalidate>
+          <label class="field" for="nome">
+            <span class="field__label">Como podemos te chamar? <small>(opcional)</small></span>
+            <input class="input" id="nome" name="nome" type="text" maxlength="20" autocomplete="given-name" placeholder="Seu nome">
+          </label>
+          <button class="btn btn--primary btn--lg" type="submit">Começar pedido</button>
+          <p class="hint">Não precisa de cadastro. O pedido é feito e pago no totem.</p>
+        </form>
+      </section>
+
+      <!-- Administrador -->
+      <section class="pane" id="painel-admin" role="tabpanel" aria-labelledby="tab-admin" hidden>
+        <form class="form" id="formAdmin" novalidate>
+          <p class="banner" id="aviso" role="status" hidden></p>
+
+          <label class="field" for="usuario">
+            <span class="field__label">Usuário</span>
+            <input class="input" id="usuario" name="usuario" type="text" autocomplete="username" autocapitalize="none" spellcheck="false">
+          </label>
+
+          <label class="field" for="senha">
+            <span class="field__label">Senha</span>
+            <span class="pass">
+              <input class="input" id="senha" name="senha" type="password" autocomplete="current-password">
+              <button class="pass__toggle" type="button" id="verSenha" aria-pressed="false" aria-label="Mostrar senha">Mostrar</button>
+            </span>
+          </label>
+
+          <p class="form-error" id="erro" role="alert" hidden></p>
+
+          <button class="btn btn--dark btn--lg" type="submit" id="entrarAdmin">Entrar no painel</button>
+
+          <p class="demo">
+            Acesso de demonstração:<br>
+            usuário <code>admin</code> · senha <code>byte2026</code>
+          </p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/data.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

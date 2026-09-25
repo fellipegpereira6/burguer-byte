@@ -1,0 +1,272 @@
+  <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Burguer Byte — Autoatendimento</title>
+  <meta name="description" content="Totem de autoatendimento da Burguer Byte: escolha, personalize e pague seu pedido.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/auth.js" data-exigir="qualquer"></script>
+</head>
+<body>
+
+<div class="stage">
+
+  <div class="totem" id="app" data-screen="welcome">
+
+    <!-- ===== Cabeçalho fixo ===== -->
+    <header class="topbar">
+      <div class="topbar__row">
+        <div class="brand">
+          <span class="brand__logo" aria-hidden="true"></span>
+          <span class="brand__name">BURGUER_BYTE</span>
+        </div>
+        <div class="topbar__tools">
+          <span class="timer" id="timer" role="timer" aria-label="Tempo restante de inatividade"><span id="timerValue">120</span>s</span>
+          <button class="icon-btn" id="a11yOpen" type="button" aria-label="Abrir opções de acessibilidade" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="1.9"/><path d="M5 8.5l7 1.5 7-1.5M12 10v4.5M12 14.5l-3.6 5.5M12 14.5l3.6 5.5"/></svg>
+          </button>
+        </div>
+      </div>
+      <h1 class="topbar__title" id="screenTitle" tabindex="-1">Bem-vindo!</h1>
+    </header>
+
+    <!-- ===== Telas ===== -->
+    <main class="screens" id="screens">
+
+      <!-- 1. Boas-vindas -->
+      <section class="screen" data-screen="welcome" data-title="Bem-vindo!">
+        <div class="screen__body screen__body--center">
+          <div class="hero-card">
+            <p class="hero-card__title">BURGUER</p>
+            <p class="hero-card__title hero-card__title--pink">BYTE</p>
+            <p class="hero-card__tag">Sabor retrô em cada bit</p>
+          </div>
+
+          <div class="hero-scene" aria-hidden="true">
+            <span class="neon">EAT</span>
+            <div class="hero-scene__art" id="heroArt"></div>
+          </div>
+
+          <button class="btn btn--primary btn--lg" type="button" data-action="start">
+            <svg class="btn__icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10 19z"/></svg>
+            Tocar para iniciar
+          </button>
+
+          <div class="panel" role="group" aria-labelledby="welcomeA11yLabel">
+            <p class="panel__label" id="welcomeA11yLabel">Opções de acessibilidade:</p>
+            <div class="a11y-row">
+              <button class="chip chip--sm" type="button" data-a11y="libras" aria-pressed="false">Libras</button>
+              <button class="chip chip--sm" type="button" data-a11y="audio" aria-pressed="false">Áudio guia</button>
+              <button class="chip chip--sm" type="button" data-a11y="contrast" aria-pressed="false">Alto contraste</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Cardápio -->
+      <section class="screen" data-screen="menu" data-title="Escolha sua delícia" hidden>
+        <div class="tabs" id="tabs" role="tablist" aria-label="Categorias do cardápio"></div>
+        <div class="screen__body">
+          <h2 class="section-title" id="menuHeading"></h2>
+          <div class="grid" id="productGrid"></div>
+        </div>
+        <footer class="orderbar">
+          <div class="orderbar__info">
+            <span class="orderbar__label">Meu Pedido</span>
+            <strong class="orderbar__total" id="orderbarTotal">R$ 0,00 (Vazio)</strong>
+          </div>
+          <button class="btn btn--primary btn--auto" id="viewCart" type="button" data-action="cart" disabled>Ver carrinho</button>
+        </footer>
+      </section>
+
+      <!-- 3. Detalhes do item -->
+      <section class="screen" data-screen="detail" data-title="Detalhes do item" hidden>
+        <div class="screen__body" id="detailBody"></div>
+      </section>
+
+      <!-- 4. Personalizar -->
+      <section class="screen" data-screen="customize" data-title="Personalizar combo" hidden>
+        <div class="screen__body" id="customizeBody"></div>
+      </section>
+
+      <!-- 5. Carrinho -->
+      <section class="screen" data-screen="cart" data-title="Seu carrinho" hidden>
+        <div class="screen__body" id="cartBody"></div>
+      </section>
+
+      <!-- 6. Forma de pagamento -->
+      <section class="screen" data-screen="payment" data-title="Forma de pagamento" hidden>
+        <div class="screen__body screen__body--center">
+          <h2 class="section-title section-title--center">Como deseja pagar?</h2>
+          <p class="pay-total">Total do pedido: <strong id="payTotal">R$ 0,00</strong></p>
+
+          <button class="pay-card" type="button" data-action="pay-pix">
+            <svg class="pay-card__icon pay-card__icon--green" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5v.01M17.5 14.5v.01" stroke-linecap="round" stroke-width="2.6"/></svg>
+            <span class="pay-card__title">Pagar com PIX</span>
+            <span class="pay-card__text">Aprovação instantânea do pedido e preparo imediato!</span>
+          </button>
+
+          <button class="pay-card" type="button" data-action="pay-card">
+            <svg class="pay-card__icon pay-card__icon--yellow" viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M6.5 15h4" stroke-linecap="round"/></svg>
+            <span class="pay-card__title">Cartão crédito/débito</span>
+            <span class="pay-card__text">Insira ou aproxime o cartão na maquininha ao lado.</span>
+          </button>
+
+          <button class="btn btn--ghost" type="button" data-action="cart">Voltar ao carrinho</button>
+        </div>
+      </section>
+
+      <!-- 7. PIX -->
+      <section class="screen" data-screen="pix" data-title="Pagamento PIX" hidden>
+        <div class="screen__body screen__body--center">
+          <p class="pix-value">Valor do PIX: <strong id="pixValue">R$ 0,00</strong></p>
+
+          <div class="qr-card">
+            <div class="qr-card__code" id="qrCode" role="img" aria-label="QR Code do PIX (demonstração)"></div>
+            <p class="qr-card__hint">Escaneie com o app do seu banco</p>
+          </div>
+
+          <p class="expire-pill" role="timer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            O código expira em <span id="pixTimer">04:59</span>
+          </p>
+          <p class="note">O totem será liberado automaticamente caso o pagamento expire.</p>
+
+          <div class="btn-row">
+            <button class="btn btn--danger" type="button" data-action="pix-cancel">Cancelar</button>
+            <button class="btn btn--ghost" type="button" data-action="payment">Voltar</button>
+          </div>
+
+          <div class="demo-box">
+            <p>Modo demonstração</p>
+            <button class="btn btn--mini" type="button" data-action="pix-simulate">Simular pagamento aprovado</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Terminal de cartão -->
+      <section class="screen" data-screen="card" data-title="Terminal de cartão" hidden>
+        <div class="screen__body screen__body--center">
+
+          <!-- aguardando o cartão -->
+          <div class="stack" data-when="waiting">
+            <div class="terminal" aria-hidden="true">
+              <div class="terminal__screen"><span class="terminal__pulse"></span></div>
+              <div class="terminal__keys"></div>
+            </div>
+            <h2 class="section-title section-title--center">Aproxime ou insira o cartão</h2>
+            <p class="note">Valor: <strong id="cardValue">R$ 0,00</strong>. Siga as instruções na maquininha ao lado.</p>
+            <button class="btn btn--ghost" type="button" data-action="payment">Escolher outra forma</button>
+            <div class="demo-box">
+              <p>Modo demonstração</p>
+              <div class="btn-row">
+                <button class="btn btn--mini" type="button" data-action="card-ok">Aprovar</button>
+                <button class="btn btn--mini btn--mini-danger" type="button" data-action="card-fail">Falhar conexão</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- reconectando -->
+          <div class="stack" data-when="connecting" hidden>
+            <div class="spinner" aria-hidden="true"></div>
+            <h2 class="section-title section-title--center">Reconectando à maquininha…</h2>
+            <p class="note">Aguarde alguns segundos. Seu cartão não será cobrado agora.</p>
+          </div>
+
+          <!-- conexão perdida -->
+          <div class="stack" data-when="error" hidden>
+            <div class="alert alert--center alert--error" role="alert">
+              <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5M12 17.5v.01"/></svg>
+              <p class="alert__title">Conexão com o terminal perdida!</p>
+              <p>Não se preocupe: seu cartão não foi cobrado. O que você deseja fazer agora?</p>
+            </div>
+            <button class="btn btn--primary" type="button" data-action="card-retry">
+              <svg class="btn__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg>
+              Retentar conexão segura
+            </button>
+            <button class="btn btn--ghost" type="button" data-action="payment">Pagar com outro método</button>
+            <button class="btn btn--danger" type="button" data-action="cancel-order">Cancelar pedido totalmente</button>
+            <p class="notice">✓ Mecanismo seguro de prevenção contra cobrança duplicada ativa.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 9. Confirmação -->
+      <section class="screen" data-screen="confirmation" data-title="Pedido concluído!" hidden>
+        <div class="screen__body screen__body--center">
+          <div class="ok-card" role="status">
+            <svg class="ok-card__seal" viewBox="0 0 48 48" width="52" height="52" aria-hidden="true"><path d="M24 3l5 3.6 6.2-.3 2 5.9 5.1 3.6-1.8 6 1.8 6-5.1 3.6-2 5.9-6.2-.3L24 45l-5-3.6-6.2.3-2-5.9-5.1-3.6 1.8-6-1.8-6 5.1-3.6 2-5.9 6.2.3z" fill="#fff" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M16.5 24.5l5 5 10-10.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <p class="ok-card__title">Pagamento confirmado!</p>
+            <p class="ok-card__text">A cozinha já recebeu e está preparando seu hambúrguer.</p>
+          </div>
+
+          <div class="ticket">
+            <p class="ticket__label">Sua senha é:</p>
+            <p class="ticket__number" id="ticketNumber" aria-live="polite">#402</p>
+            <p class="ticket__hint">Guarde seu cupom impresso</p>
+          </div>
+
+          <div class="coupon-box">
+            <p class="coupon-box__title">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg>
+              Problemas com o cupom?
+            </p>
+            <p>Se a impressora falhou, toque no botão abaixo para reemitir ou solicitar ajuda segura.</p>
+            <button class="btn btn--mini btn--white" type="button" data-action="reprint">Reproduzir senha com contingência</button>
+          </div>
+
+          <button class="btn btn--primary btn--lg" type="button" data-action="finish">Finalizar e liberar totem</button>
+        </div>
+      </section>
+
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <a class="operator-link" href="index.html">Sair e trocar de perfil</a>
+</div>
+
+<!-- ===== Diálogos ===== -->
+<dialog class="dialog" id="a11yDialog" aria-labelledby="a11yTitle">
+  <h2 class="dialog__title" id="a11yTitle">Acessibilidade</h2>
+  <p class="dialog__text">Ative os recursos que ajudam você a fazer o pedido. Eles são desligados quando o atendimento termina.</p>
+  <div class="dialog__list">
+    <button class="switch" type="button" data-a11y="libras" aria-pressed="false"><span>Libras (tradutor em vídeo)</span><span class="switch__state" aria-hidden="true"></span></button>
+    <button class="switch" type="button" data-a11y="audio" aria-pressed="false"><span>Áudio guia (leitura em voz alta)</span><span class="switch__state" aria-hidden="true"></span></button>
+    <button class="switch" type="button" data-a11y="contrast" aria-pressed="false"><span>Alto contraste</span><span class="switch__state" aria-hidden="true"></span></button>
+    <button class="switch" type="button" data-a11y="text" aria-pressed="false"><span>Letras maiores</span><span class="switch__state" aria-hidden="true"></span></button>
+  </div>
+  <button class="btn btn--primary" type="button" data-dialog-close>Pronto</button>
+</dialog>
+
+<dialog class="dialog" id="confirmDialog" aria-labelledby="confirmTitle">
+  <h2 class="dialog__title" id="confirmTitle"></h2>
+  <p class="dialog__text" id="confirmText"></p>
+  <div class="btn-row">
+    <button class="btn btn--ghost" type="button" id="confirmCancel">Voltar</button>
+    <button class="btn btn--danger" type="button" id="confirmOk">Confirmar</button>
+  </div>
+</dialog>
+
+<dialog class="dialog" id="idleDialog" aria-labelledby="idleTitle">
+  <h2 class="dialog__title" id="idleTitle">Você ainda está aí?</h2>
+  <p class="dialog__text">Por falta de atividade, o pedido será cancelado em <strong id="idleCount">15</strong> segundos.</p>
+  <div class="btn-row">
+    <button class="btn btn--ghost" type="button" id="idleEnd">Encerrar</button>
+    <button class="btn btn--primary" type="button" id="idleContinue">Continuar pedido</button>
+  </div>
+</dialog>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

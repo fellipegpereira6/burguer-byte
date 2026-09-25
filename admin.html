@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Burguer Byte — Painel do administrador</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="js/auth.js" data-exigir="admin"></script>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar__inner">
+    <div class="bar__id">
+      <span class="logo" aria-hidden="true">BB</span>
+      <div class="bar__names">
+        <strong>Burguer Byte</strong>
+        <span>Painel do administrador</span>
+      </div>
+      <span class="pill pill--demo">Demonstração</span>
+    </div>
+
+    <div class="bar__actions">
+      <button class="btn" type="button" id="btnPrint">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg>
+        Imprimir
+      </button>
+      <button class="btn" type="button" id="btnExport">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>
+        Exportar relatório
+      </button>
+      <button class="btn btn--primary" type="button" id="btnClose">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        <span id="btnCloseLabel">Fechar o caixa</span>
+      </button>
+      <span class="bar__sep" aria-hidden="true"></span>
+      <span class="user" id="userChip"><span class="user__dot" aria-hidden="true"></span><span id="userName">admin</span></span>
+      <button class="btn" type="button" id="btnLogout">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M16 8l4 4-4 4M20 12H9"/></svg>
+        Sair
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section aria-labelledby="resumo">
+    <div class="head">
+      <div>
+        <h1 id="resumo">Resumo de hoje</h1>
+        <p class="muted">Segunda-feira, 21 de setembro · atualizado às 22:10</p>
+      </div>
+      <p class="muted head__hint">Confira os números antes de fechar</p>
+    </div>
+
+    <div class="stats">
+      <article class="card stat">
+        <div class="stat__top">
+          <span class="stat__label">Total vendido hoje</span>
+          <span class="chip"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span>
+        </div>
+        <strong class="stat__value">R$ 8.742,50</strong>
+        <span class="stat__note">Todas as formas de pagamento</span>
+      </article>
+
+      <article class="card stat">
+        <div class="stat__top">
+          <span class="stat__label">Pedidos</span>
+          <span class="chip"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></svg></span>
+        </div>
+        <strong class="stat__value">186</strong>
+        <span class="stat__note">32 pedidos a mais que ontem</span>
+      </article>
+
+      <article class="card stat">
+        <div class="stat__top">
+          <span class="stat__label">Ticket médio</span>
+          <span class="chip"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a2 2 0 0 0 2-2V6h14v2a2 2 0 0 0 0 4v2a2 2 0 0 0 0 4v2H5v-2a2 2 0 0 0-2-2z" transform="translate(0 -1)"/><path d="M10 9h4M10 13h4"/></svg></span>
+        </div>
+        <strong class="stat__value">R$ 47,00</strong>
+        <span class="stat__note">Valor médio por pedido</span>
+      </article>
+
+      <article class="card stat stat--alert" id="cashCard">
+        <div class="stat__top">
+          <span class="stat__label">Diferença de caixa</span>
+          <span class="chip chip--alert"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5M12 17.5v.01"/></svg></span>
+        </div>
+        <strong class="stat__value">− R$ 18,50</strong>
+        <span class="stat__note" id="cashNote">Atenção: valor recebido não confere</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="duo">
+    <article class="card panel" aria-labelledby="pgTitle">
+      <div class="panel__head">
+        <div>
+          <h2 id="pgTitle">Como os clientes pagaram</h2>
+          <p class="muted">Divisão do total vendido hoje</p>
+        </div>
+        <strong class="panel__total">R$ 8.742,50</strong>
+      </div>
+
+      <div class="split" role="img" aria-label="Pix 36%, crédito 30%, débito 21%, dinheiro 13%">
+        <span style="flex: 3147.30; background: var(--c-pix)"></span>
+        <span style="flex: 2622.75; background: var(--c-credit)"></span>
+        <span style="flex: 1835.95; background: var(--c-debit)"></span>
+        <span style="flex: 1136.50; background: var(--c-cash)"></span>
+      </div>
+
+      <ul class="legend">
+        <li><i style="background: var(--c-pix)"></i><span>Pix</span><b>R$ 3.147,30</b><em>36%</em></li>
+        <li><i style="background: var(--c-credit)"></i><span>Crédito</span><b>R$ 2.622,75</b><em>30%</em></li>
+        <li><i style="background: var(--c-debit)"></i><span>Débito</span><b>R$ 1.835,95</b><em>21%</em></li>
+        <li><i style="background: var(--c-cash)"></i><span>Dinheiro</span><b>R$ 1.136,50</b><em>13%</em></li>
+      </ul>
+    </article>
+
+    <article class="card panel" aria-labelledby="prTitle">
+      <div class="panel__head">
+        <div>
+          <h2 id="prTitle">Produtos mais vendidos</h2>
+          <p class="muted">Combo Master lidera sobre o Rock Burger</p>
+        </div>
+      </div>
+
+      <ol class="rank">
+        <li>
+          <span class="rank__pos rank__pos--first">1º</span>
+          <div class="rank__main">
+            <div class="rank__line"><strong>Combo Master</strong><span>64 vendidos · R$ 3.193,60</span></div>
+            <div class="bar-track"><span class="bar-fill bar-fill--first" style="width: 100%"></span></div>
+          </div>
+        </li>
+        <li>
+          <span class="rank__pos">2º</span>
+          <div class="rank__main">
+            <div class="rank__line"><strong>Rock Burger</strong><span>48 vendidos · R$ 1.915,20</span></div>
+            <div class="bar-track"><span class="bar-fill" style="width: 75%"></span></div>
+          </div>
+        </li>
+        <li>
+          <span class="rank__pos">3º</span>
+          <div class="rank__main">
+            <div class="rank__line"><strong>Byte Bacon</strong><span>31 vendidos · R$ 1.145,45</span></div>
+            <div class="bar-track"><span class="bar-fill" style="width: 48%"></span></div>
+          </div>
+        </li>
+        <li>
+          <span class="rank__pos">4º</span>
+          <div class="rank__main">
+            <div class="rank__line"><strong>Batata Turbo</strong><span>27 vendidos · R$ 537,30</span></div>
+            <div class="bar-track"><span class="bar-fill" style="width: 42%"></span></div>
+          </div>
+        </li>
+      </ol>
+    </article>
+  </section>
+
+  <section class="card panel" aria-labelledby="vrTitle">
+    <div class="panel__head">
+      <div>
+        <h2 id="vrTitle">Vendas recentes</h2>
+        <p class="muted">Últimos pedidos recebidos nos totens</p>
+      </div>
+      <p class="muted">Mostrando 5 de 186 pedidos</p>
+    </div>
+
+    <div class="table-wrap">
+      <table id="salesTable">
+        <thead>
+          <tr>
+            <th scope="col">Pedido</th>
+            <th scope="col">Horário</th>
+            <th scope="col">Itens</th>
+            <th scope="col" class="num">Valor</th>
+            <th scope="col">Pagamento</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><b>#0186</b></td><td>22:04</td><td>1 Combo Master, 1 Coca-Cola</td><td class="num"><b>R$ 58,90</b></td><td>Pix</td><td><span class="badge badge--ok">Aprovado</span></td></tr>
+          <tr><td><b>#0185</b></td><td>21:57</td><td>2 Rock Burger, 1 Batata Turbo</td><td class="num"><b>R$ 94,70</b></td><td>Crédito</td><td><span class="badge badge--ok">Aprovado</span></td></tr>
+          <tr><td><b>#0184</b></td><td>21:43</td><td>1 Byte Bacon, 1 Suco</td><td class="num"><b>R$ 41,50</b></td><td>Débito</td><td><span class="badge badge--ok">Aprovado</span></td></tr>
+          <tr><td><b>#0183</b></td><td>21:31</td><td>1 Combo Master</td><td class="num"><b>R$ 49,90</b></td><td>Dinheiro</td><td><span class="badge badge--ok">Aprovado</span></td></tr>
+          <tr><td><b>#0182</b></td><td>21:18</td><td>2 Rock Burger</td><td class="num"><b>R$ 69,80</b></td><td>Pix</td><td><span class="badge badge--bad">Estornado</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="foot"><a href="loja.html">Ver o totem da loja</a></p>
+</main>
+
+<!-- Confirmação do fechamento -->
+<dialog class="dialog" id="closeDialog" aria-labelledby="closeTitle">
+  <form method="dialog" id="closeForm" class="dialog__form" novalidate>
+    <h2 id="closeTitle">Fechar o caixa de hoje?</h2>
+    <p class="muted">Depois de fechado, os números do dia não podem mais ser alterados. Há uma diferença de <strong>− R$ 18,50</strong> entre o valor recebido e o registrado.</p>
+    <label class="field" for="justify">
+      <span>Justificativa da diferença (obrigatória)</span>
+      <textarea id="justify" rows="3" placeholder="Ex.: troco entregue a mais no pedido #0183"></textarea>
+    </label>
+    <p class="field__error" id="justifyError" role="alert" hidden>Descreva o motivo da diferença antes de fechar.</p>
+    <div class="dialog__actions">
+      <button class="btn" type="button" id="closeCancel">Voltar</button>
+      <button class="btn btn--primary" type="submit" id="closeConfirm">Fechar o caixa</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
